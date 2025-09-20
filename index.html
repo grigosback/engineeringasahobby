@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lucas Grigolato - Engineering As A Hobby</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f4f4f9;
+      color: #333;
+    }
+    header {
+      background: #252335;
+      color: #c3c3c4;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #745ca0;
+    }
+    nav a {
+      color: white;
+      padding: 1rem;
+      text-decoration: none;
+    }
+    nav a:hover {
+      background: #666;
+    }
+    section {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+      margin-top: 1.5rem;
+    }
+    .markdown-body code {
+      background: #252335;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    .markdown-body pre {
+    background: #252335;
+    padding: 1rem;
+    overflow-x: auto;
+    border-radius: 8px;
+    }
+    /* Carousel */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 700px;
+      margin: 2rem auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .carousel img {
+      width: 100%;
+      display: none;
+    }
+    .carousel img.active {
+      display: block;
+    }
+    .carousel-buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+    .carousel-buttons button {
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (window.hljs) hljs.highlightAll();
+  });
+</script>
+</head>
+<body>
+  <header>
+    <h1>Lucas Grigolato</h1>
+    <h2>Engineering As A Hobby</h2>
+    <p>Telecommunications Engineer • FPGA Engineer • Home Automation Enthusiast</p>
+  </header>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#fpga">FPGA</a>
+    <a href="#automation">Home Automation</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home">
+    <h2>Welcome</h2>
+    <p>Hi, I’m Lucas. I work with FPGAs.</p>
+
+    <!-- Carousel -->
+    <div class="carousel">
+      <img src="project1.jpg" class="active" alt="Project 1">
+      <img src="project2.jpg" alt="Project 2">
+      <img src="project3.jpg" alt="Project 3">
+      <div class="carousel-buttons">
+        <button onclick="prevSlide()">❮</button>
+        <button onclick="nextSlide()">❯</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FPGA -->
+  <section id="fpga">
+    <h2>FPGA Projects</h2>
+    <div id="fpga-content" class="markdown-body"></div>
+    <main class="markdown-body">
+    <p>This is <code>inline code</code> with your style.</p>
+
+    <pre><code class="language-python">
+def hello():
+    print("Hello, world!")
+    </code></pre>
+  </main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+<!-- Add VHDL explicitly -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/vhdl.min.js"></script>
+<script>
+  hljs.registerLanguage('vhdl', window.hljsGrammarVhdl);
+  hljs.highlightAll();
+</script>
+
+<script>
+  // Configure marked to use highlight.js
+  marked.setOptions({
+    highlight: function(code, lang) {
+      if (hljs.getLanguage(lang)) {
+        return hljs.highlight(code, { language: lang }).value;
+      }
+      return hljs.highlightAuto(code).value;
+    }
+  });
+</script>
+  </section>
+
+  <!-- Home Automation -->
+  <section id="automation">
+    <h2>Home Automation</h2>
+    <div id="automation-content" class="markdown-body"></div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>You can reach me at: <a href="mailto:lucasmarianogrigolato@gmail.com">lucasmarianogrigolato@gmail.com</a></p>
+  </section>
+
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <script>
+    // Helper: load Markdown file into an element
+    async function loadMarkdown(url, elementId) {
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        document.getElementById(elementId).innerHTML = marked.parse(text);
+        if (window.MathJax) {
+        MathJax.typesetPromise(); // render LaTeX
+        }
+        if (window.hljs) {
+        hljs.highlightAll(); // re-run syntax highlighting
+        }
+    } catch (err) {
+        document.getElementById(elementId).innerHTML =
+        "<p style='color:red'>Could not load " + url + "</p>";
+    }
+    }
+
+    // Load section content
+    loadMarkdown("fpga.md", "fpga-content");
+    loadMarkdown("automation.md", "automation-content");
+  </script>
+
+  <!-- MathJax for LaTeX -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script>
+    // Carousel logic
+    let currentSlide = 0;
+    const slides = document.querySelectorAll(".carousel img");
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === index);
+      });
+    }
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
+    setInterval(nextSlide, 5000);
+  </script>
+</body>
+</html>
